@@ -21,7 +21,12 @@ public class WordDecomposer {
 	}
 
 	public List<Character> sort(List<Character> chars) {
-		return null;
+		List<Character> result = Collections.emptyList();
+		if(!chars.isEmpty()){
+			result = new ArrayList<>(chars);
+			result.sort((a,b)-> a-b);
+		}
+		return result;
 	}
 
 	public String join(List<Character> chars) {
