@@ -22,9 +22,9 @@ public class WordDecomposer {
 
 	public List<Character> sort(List<Character> chars) {
 		List<Character> result = Collections.emptyList();
-		if(!chars.isEmpty()){
+		if (!chars.isEmpty()) {
 			result = new ArrayList<>(chars);
-			result.sort((a,b)-> a-b);
+			result.sort((a, b) -> a - b);
 		}
 		return result;
 	}
@@ -34,4 +34,5 @@ public class WordDecomposer {
 		chars.forEach(sb::append);
 		return sb.toString();
 	}
+
 }
