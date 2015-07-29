@@ -30,6 +30,8 @@ public class WordDecomposer {
 	}
 
 	public String join(List<Character> chars) {
-		return null;
+		StringBuilder sb = new StringBuilder();
+		chars.forEach(sb::append);
+		return sb.toString();
 	}
 }

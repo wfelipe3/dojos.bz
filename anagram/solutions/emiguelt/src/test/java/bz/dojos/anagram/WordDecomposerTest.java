@@ -6,30 +6,47 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class WordDecomposerTest {
 
 	private WordDecomposer decomposer;
 
-	@Before
-	public void setup() {
-		decomposer = new WordDecomposer();
+	private void assertJoin(List<Character> list, String expected) {
+		assertEquals(expected.length(), list.size());
+		assertEquals(expected, decomposer.join(list));
+	}
+
+	private void assertSort(List<Character> input, List<Character> expected) {
+		List<Character> result = sort(input);
+		assertEquals(expected.size(), result.size());
+		assertEquals(expected, result);
+	}
+
+	private void assertSplit(final String word) {
+		List<Character> chars = split(word);
+		assertEquals(word.length(), chars.size());
+		chars.forEach(ch -> {
+			if (!word.contains(ch + ""))
+				fail("word not found");
+		});
+	}
+
+	@Test
+	public void givenEmptyList_ThenReturnEmptyList_inSortMethod() {
+		assertSort(Collections.emptyList(), Collections.emptyList());
+	}
+
+	@Test
+	public void givenEmptyList_thenReturnEmptyString_inJoinMethod() {
+		assertJoin(Collections.emptyList(), "");
 	}
 
 	@Test
 	public void givenEmptyString_thenReturnEmptyList() {
 		assertTrue(split(null).isEmpty());
 		assertTrue(split("").isEmpty());
-	}
-
-	private List<Character> split(String a) {
-		return decomposer.split(a);
 	}
 
 	@Test
@@ -41,11 +58,13 @@ public class WordDecomposerTest {
 	}
 
 	@Test
-	public void givenTwoCharString_thenReturnTwoSizeListContainingChars() {
-		assertSplit("ab");
-		assertSplit("bc");
-		assertSplit("cd");
-		assertSplit(" a");
+	public void givenOneSizeList_thenReturnEquivalenteList_InSortMethod() {
+		assertSort(Arrays.asList('a'), Arrays.asList('a'));
+	}
+
+	@Test
+	public void givenOneSizeList_thenReturnStringSizeOne_inJoinMethod() {
+		assertJoin(Arrays.asList('1'), "1");
 	}
 
 	@Test
@@ -57,13 +76,21 @@ public class WordDecomposerTest {
 	}
 
 	@Test
-	public void givenEmptyList_ThenReturnEmptyList_inSortMethod() {
-		assertSort(Collections.emptyList(), Collections.emptyList());
+	public void givenThreeSizeList_thenReturnSortedList_InSortMethod() {
+		assertSort(Arrays.asList('b', 'a', 'a'), Arrays.asList('a', 'a', 'b'));
 	}
 
 	@Test
-	public void givenOneSizeList_thenReturnEquivalenteList_InSortMethod() {
-		assertSort(Arrays.asList('a'), Arrays.asList('a'));
+	public void givenThreeSizeList_thenReturnStringSizeThree_inJoinMethod() {
+		assertJoin(Arrays.asList('1', 'a'), "1a");
+	}
+
+	@Test
+	public void givenTwoCharString_thenReturnTwoSizeListContainingChars() {
+		assertSplit("ab");
+		assertSplit("bc");
+		assertSplit("cd");
+		assertSplit(" a");
 	}
 
 	@Test
@@ -72,27 +99,21 @@ public class WordDecomposerTest {
 	}
 
 	@Test
-	public void givenThreeSizeList_thenReturnSortedList_InSortMethod() {
-		assertSort(Arrays.asList('b', 'a', 'a'), Arrays.asList('a', 'a', 'b'));
+	public void givenTwoSizeList_thenReturnStringSizeTwo_inJoinMethod() {
+		assertJoin(Arrays.asList('1', 'a'), "1a");
 	}
 
-	private void assertSort(List<Character> input, List<Character> expected) {
-		List<Character> result = sort(input);
-		assertEquals(expected.size(), result.size());
-		assertEquals(expected, result);
+	@Before
+	public void setup() {
+		decomposer = new WordDecomposer();
 	}
 
 	private List<Character> sort(List<Character> list) {
 		return decomposer.sort(list);
 	}
 
-	private void assertSplit(final String word) {
-		List<Character> chars = split(word);
-		assertEquals(word.length(), chars.size());
-		chars.forEach(ch -> {
-			if (!word.contains(ch + ""))
-				fail("word not found");
-		});
+	private List<Character> split(String a) {
+		return decomposer.split(a);
 	}
 
 }
