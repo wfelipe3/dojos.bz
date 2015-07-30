@@ -1,20 +1,37 @@
 package bz.dojos.anagram;
 
+import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-
-import bz.dojos.anagram.AnagramFinder;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Created by WilliamE on 23/07/2015.
  */
+
+@RunWith(MockitoJUnitRunner.class)
 public class AnagramFinderTest {
-    private final AnagramFinder anagram = new AnagramFinder();
+	
+	@Mock
+	private AnagramIndex index;
+	
+	
+    private AnagramFinder anagram;
+    
+    @Before
+    public void setup(){
+    	anagram= new AnagramFinder(index);
+    }
 
     @Test
     public void givenEmptyStringThenReturnEmptyList() {
@@ -43,6 +60,9 @@ public class AnagramFinderTest {
     }
 
     private void assertAnagrams(String word, String... expected) {
+    	List<String> list = new ArrayList<>(Arrays.asList(expected));
+    	list.add(word);
+    	when(index.getList(word)).thenReturn(list);
         List<String> anagrams= anagram.findAnagrams(word);
         Assert.assertThat(anagrams, CoreMatchers.hasItems(expected));
     }
