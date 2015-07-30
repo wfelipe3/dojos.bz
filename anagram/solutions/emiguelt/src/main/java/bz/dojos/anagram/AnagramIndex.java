@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AnagramIndex {
 	private KeyCreator keyCreator;
@@ -14,13 +15,15 @@ public class AnagramIndex {
 
 	public AnagramIndex(KeyCreator keyCreator) {
 		this.keyCreator = keyCreator;
-		this.dictionary = new HashMap<>();
+		this.dictionary = new ConcurrentHashMap<>();
 	}
 
 	public void load(DictionaryProvider provider) {
-		dictionary.clear();
+		if(dictionary.isEmpty()){
 
-		provider.get().forEach(s -> {
+		Set<String> entries = provider.get();
+		
+		entries.forEach(s -> {
 			String key = keyCreator.getKey(s);
 			Set<String> set = dictionary.get(key);
 			if (set == null) {
@@ -30,6 +33,7 @@ public class AnagramIndex {
 
 			set.add(s);
 		});
+		}
 	}
 
 	public List<String> getList(String key) {
