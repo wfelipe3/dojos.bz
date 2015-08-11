@@ -15,7 +15,6 @@ Retrospective
 * Good discussion around TDD and algorithms terminology
 
 ### Bads :(
-* 
 * It's necessary a more detailed problem description (loss time on understanding)
 * Cookies :(
 
