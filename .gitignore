@@ -26,3 +26,7 @@ gradle-app.setting
 # Maven
 log/
 target/
+RomanNumerals/RomanNumerals/bin/*
+RomanNumerals/RomanNumerals/obj/Debug/*
+RomanNumerals/RomanNumeralsTest/bin/*
+RomanNumerals/RomanNumeralsTest/obj/Debug/*
