@@ -30,3 +30,7 @@ RomanNumerals/RomanNumerals/bin/*
 RomanNumerals/RomanNumerals/obj/Debug/*
 RomanNumerals/RomanNumeralsTest/bin/*
 RomanNumerals/RomanNumeralsTest/obj/Debug/*
+MathInterpreter/MathInterpreterTest/obj/Debug/*
+MathInterpreter/MathInterpreter/bin/*
+MathInterpreter/MathInterpreter/obj/*
+MathInterpreter/MathInterpreterTest/bin/*
